@@ -1,3 +1,0 @@
-C:/Users/arsbo/source/repos/vulkan triangle/build/CMakeFiles/vulkan.dir
-C:/Users/arsbo/source/repos/vulkan triangle/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/arsbo/source/repos/vulkan triangle/build/CMakeFiles/ZERO_CHECK.dir
