@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\arsbo\source\repos\vulkan triangle\build\CMakeFiles\bd3889683f864f7cc807a7ce04033f05\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{F6CDDE00-D59D-3FB2-BEF1-301D4FD5C538}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
