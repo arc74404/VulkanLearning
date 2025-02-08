@@ -101,5 +101,6 @@
         "random": "cpp",
         "stack": "cpp",
         "expected": "cpp"
-    }
+    },
+    "C_Cpp.inlayHints.parameterNames.suppressWhenArgumentContainsName": false
 }

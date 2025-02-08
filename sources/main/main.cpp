@@ -26,11 +26,12 @@ GLFWwindow *create_window()
 	return window;
 }
 
-void run_window(GLFWwindow *window)
+void run_window(VkContext *vk_context, GLFWwindow *window)
 {
 	while (!glfwWindowShouldClose(window))
 	{
 		glfwPollEvents();
+		vk_render(vk_context);
 	}
 }
 
@@ -42,7 +43,7 @@ int main()
 
 	vk_init(&vk_context, glf_window);
 
-	run_window(glf_window);
+	run_window(&vk_context, glf_window);
 
 	glfwDestroyWindow(glf_window);
 	glfwTerminate();
