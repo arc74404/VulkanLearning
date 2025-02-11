@@ -17,6 +17,16 @@ VkDevice Device::getLogicalDevice()
 	return m_logical_device;
 }
 
+int Device::getGraphicIndex()
+{
+	return m_graphics_index;
+}
+
+VkQueue Device::getGraphicsQueue()
+{
+	return m_graphics_queue;
+}
+
 VkPhysicalDevice Device::getPhysicalDevice()
 {
 	return m_physical_device;

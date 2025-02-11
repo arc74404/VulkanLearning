@@ -23,6 +23,14 @@ Window::Window(uint32_t x, uint32_t y, const std::string &title)
 
 		throw std::exception("Window did not create");
 	}
+
+	m_screen_rect.extent.width = x;
+	m_screen_rect.extent.height = y;
+}
+
+VkRect2D Window::getScreenRect()
+{
+	return m_screen_rect;
 }
 
 int32_t Window::run(VkContext *vk_context)
@@ -31,6 +39,17 @@ int32_t Window::run(VkContext *vk_context)
 	{
 		glfwPollEvents();
 		if (!vk_render(vk_context))
+			return -1;
+	}
+	return 0;
+}
+
+int32_t Window::run(Renderer *renderer)
+{
+	while (!glfwWindowShouldClose(m_window))
+	{
+		glfwPollEvents();
+		if (!renderer->render())
 			return -1;
 	}
 	return 0;

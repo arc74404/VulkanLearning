@@ -13,6 +13,16 @@
 		return false;                     \
 	}
 
+VkSurfaceFormatKHR SwapChain::getSurfaceFormat()
+{
+	return m_surface_format;
+}
+
+VkSwapchainKHR *SwapChain::getSwapChainPtr()
+{
+	return &m_swapchain;
+}
+
 bool SwapChain::createSwapChain(Device device, VkSurfaceKHR surface)
 {
 
@@ -38,7 +48,7 @@ bool SwapChain::createSwapChain(Device device, VkSurfaceKHR surface)
 	}
 
 	VkSurfaceCapabilitiesKHR surface_caps = {};
-	(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physical_device, surface, &surface_caps));
+	VK_CHECK(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physical_device, surface, &surface_caps));
 
 	uint32_t image_count = 0;
 	image_count = surface_caps.minImageCount + 1;
@@ -58,23 +68,20 @@ bool SwapChain::createSwapChain(Device device, VkSurfaceKHR surface)
 
 	VkImageCreateInfo image_info = image_create_info();
 
-	vkCreateImage(logical_device, &image_info, 0, m_swapchain_images.data());
+	VK_CHECK(vkCreateImage(logical_device, &image_info, 0, m_swapchain_images));
 
-	(vkCreateSwapchainKHR(logical_device, &swapchain_info,
-						  0, &m_swapchain));
+	VK_CHECK(vkCreateSwapchainKHR(logical_device, &swapchain_info,
+								  0, &m_swapchain));
 
-	uint32_t swapchain_image_count = 0;
+	swapchain_image_count = 0;
 
 	VK_CHECK(vkGetSwapchainImagesKHR(logical_device, m_swapchain,
 									 &swapchain_image_count, 0));
 
-	m_swapchain_images.resize(swapchain_image_count);
-
 	VK_CHECK(vkGetSwapchainImagesKHR(logical_device, m_swapchain,
-									 &swapchain_image_count, m_swapchain_images.data()));
+									 &swapchain_image_count, m_swapchain_images));
 
 	// Create the image views
-	sc_image_views.resize(swapchain_image_count);
 
 	{
 		VkImageViewCreateInfo view_info = {};
@@ -86,7 +93,7 @@ bool SwapChain::createSwapChain(Device device, VkSurfaceKHR surface)
 		view_info.subresourceRange.layerCount = 1;
 		view_info.subresourceRange.levelCount = 1;
 
-		for (uint32_t i = 0; i < m_swapchain_images.size(); ++i)
+		for (uint32_t i = 0; i < swapchain_image_count; ++i)
 		{
 			view_info.image = m_swapchain_images[i];
 			VK_CHECK(vkCreateImageView(logical_device, &view_info, 0, &sc_image_views[i]));
@@ -107,10 +114,15 @@ bool SwapChain::createFrameBuffer(uint32_t height, uint32_t width, VkRenderPass 
 	frame_buffer_info.layers = 1;
 	frame_buffer_info.attachmentCount = 1;
 
-	for (uint32_t i = 0; i < m_swapchain_images.size(); ++i)
+	for (uint32_t i = 0; i < swapchain_image_count; ++i)
 	{
 		frame_buffer_info.pAttachments = &sc_image_views[i];
 		(vkCreateFramebuffer(logical_device, &frame_buffer_info, 0, &m_frame_buffer[i]));
 	}
 	return true;
+}
+
+VkFramebuffer SwapChain::getFrameBuffer(int index)
+{
+	return m_frame_buffer[index];
 }

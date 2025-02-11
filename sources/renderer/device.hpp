@@ -16,6 +16,10 @@ public:
 
 	VkPhysicalDevice getPhysicalDevice();
 
+	VkQueue getGraphicsQueue();
+
+	int getGraphicIndex();
+
 private:
 	VkPhysicalDevice m_physical_device;
 

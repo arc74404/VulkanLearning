@@ -17,7 +17,6 @@
 
 bool Pipeline::createPipeline(Device &device, VkRenderPass &renderpass)
 {
-	VkPhysicalDevice physical_device = device.getPhysicalDevice();
 	VkDevice logical_device = device.getLogicalDevice();
 
 	VkPipelineLayoutCreateInfo layout_info = {};
@@ -127,4 +126,9 @@ bool Pipeline::createPipeline(Device &device, VkRenderPass &renderpass)
 	vkCreateGraphicsPipelines(logical_device, 0, 1,
 							  &pipeline_info, 0, &m_pipeline);
 	return true;
+}
+
+VkPipeline Pipeline::getPipeline()
+{
+	return m_pipeline;
 }

@@ -13,6 +13,7 @@
 #include "device.hpp"
 
 #include "swap_chain.hpp"
+#include "pipeline.hpp"
 
 #define VK_CHECK(result)                  \
 	if (result != VK_SUCCESS)             \
@@ -28,10 +29,12 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_callback(
 	const VkDebugUtilsMessengerCallbackDataEXT *p_callback_data,
 	void *user_data);
 
-class VkRenderer
+class Renderer
 {
 public:
-	VkRenderer(GLFWwindow *window);
+	Renderer(Window *window);
+
+	bool render();
 
 private:
 	bool createInstance();
@@ -50,6 +53,10 @@ private:
 
 	bool createPipeline();
 
+	bool createCommandPool(VkDevice logical_device, uint32_t graphic_index);
+
+	bool createSemaphores(VkDevice logical_device);
+
 	VkInstance m_instance;
 
 	VkDebugUtilsMessengerEXT m_debug_messenger;
@@ -61,6 +68,15 @@ private:
 	Device m_device;
 
 	VkRenderPass m_renderpass;
+
+	Pipeline m_pipeline;
+
+	VkCommandPool m_command_pool;
+
+	VkSemaphore m_submit_semaphore;
+	VkSemaphore m_acuire_semaphore;
+
+	VkRect2D m_screen_rect;
 };
 
 struct VkContext
