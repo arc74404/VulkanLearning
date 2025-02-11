@@ -9,14 +9,23 @@ set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
 
 project(vulkan)
 
-set(SOURCES 
-    sources/main/main.cpp 
-    sources/renderer/vk_renderer.cpp)
-
 find_package(PkgConfig REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(glfw3 CONFIG REQUIRED)
 find_package(Vulkan REQUIRED)
+
+
+set(SOURCES 
+    sources/main/main.cpp 
+    sources/renderer/vk_renderer.cpp
+    sources/renderer/vk_init.cpp
+    sources/renderer/window.cpp
+    sources/renderer/device.cpp
+    sources/renderer/swap_chain.cpp
+    sources/renderer/pipeline.cpp
+)
+
+
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

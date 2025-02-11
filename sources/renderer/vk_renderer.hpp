@@ -9,6 +9,11 @@
 #include <vulkan/vulkan.h>
 #include <vector>
 
+#include "window.hpp"
+#include "device.hpp"
+
+#include "swap_chain.hpp"
+
 #define VK_CHECK(result)                  \
 	if (result != VK_SUCCESS)             \
 	{                                     \
@@ -23,6 +28,41 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_callback(
 	const VkDebugUtilsMessengerCallbackDataEXT *p_callback_data,
 	void *user_data);
 
+class VkRenderer
+{
+public:
+	VkRenderer(GLFWwindow *window);
+
+private:
+	bool createInstance();
+
+	bool createDebugMessenger();
+
+	bool createSurface(GLFWwindow *window);
+
+	bool createDevice();
+
+	bool createSwapChain(uint32_t height, uint32_t width);
+
+	bool createRenderPass(VkSurfaceFormatKHR surface_format, VkDevice logical_device);
+
+	bool createFrameBuffer();
+
+	bool createPipeline();
+
+	VkInstance m_instance;
+
+	VkDebugUtilsMessengerEXT m_debug_messenger;
+
+	VkSurfaceKHR m_surface;
+
+	SwapChain m_swapchin;
+
+	Device m_device;
+
+	VkRenderPass m_renderpass;
+};
+
 struct VkContext
 {
 	VkInstance instance;
@@ -32,11 +72,23 @@ struct VkContext
 	VkSwapchainKHR swapchain;
 	VkDebugUtilsMessengerEXT debug_messenger;
 	VkQueue graphics_queue;
+	VkPipeline pipeline;
+	VkPipelineLayout pipeline_layout;
 
 	VkCommandPool command_pool;
 
+	VkSemaphore submit_semaphore;
+	VkSemaphore acuire_semaphore;
+
 	uint32_t swapchain_image_count;
-	std::vector<VkImage> swapchain_images;
+
+	VkImage swapchain_images[5];
+	VkFramebuffer frame_buffer[5];
+	VkImageView sc_image_views[5];
+
+	VkRect2D screen_rect;
+
+	VkRenderPass renderpass;
 
 	int graphics_index;
 
