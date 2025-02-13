@@ -26,26 +26,24 @@ bool Pipeline::createPipeline(Device &device, VkRenderPass &renderpass)
 	VkShaderModule vertex_shader, fragment_shader;
 	// Vertex Shader
 	{
-
-		auto code = read_file("C:/Users/arsbo/source/repos/vulkan triangle/assets/shaders/shader.vert.spv");
-
-		size_t code_size = code.size() * sizeof(uint32_t);
+		uint32_t size = 0;
+		uint32_t *vertexCode = (uint32_t *)read_file("C:/Users/arsbo/source/repos/vulkan triangle/assets/shaders/shader.vert.spv", size);
 
 		VkShaderModuleCreateInfo shader_module_info = {};
 		shader_module_info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-		shader_module_info.pCode = code.data();
-		shader_module_info.codeSize = code_size;
+		shader_module_info.pCode = vertexCode;
+		shader_module_info.codeSize = size;
 		VK_CHECK(vkCreateShaderModule(logical_device, &shader_module_info, 0, &vertex_shader));
 	}
 	// Fragment Shader
 	{
-		auto code = read_file("C:/Users/arsbo/source/repos/vulkan triangle/assets/shaders/shader.frag.spv");
-		size_t code_size = code.size() * sizeof(uint32_t);
+		uint32_t size = 0;
+		uint32_t *fragmentCode = (uint32_t *)read_file("C:/Users/arsbo/source/repos/vulkan triangle/assets/shaders/shader.frag.spv", size);
 
 		VkShaderModuleCreateInfo shader_module_info = {};
 		shader_module_info.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-		shader_module_info.pCode = code.data();
-		shader_module_info.codeSize = code_size;
+		shader_module_info.pCode = fragmentCode;
+		shader_module_info.codeSize = size;
 		VK_CHECK(vkCreateShaderModule(logical_device, &shader_module_info, 0, &fragment_shader));
 	}
 

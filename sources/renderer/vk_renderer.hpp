@@ -15,6 +15,8 @@
 #include "swap_chain.hpp"
 #include "pipeline.hpp"
 
+#include "vk_types.hpp"
+
 #define VK_CHECK(result)                  \
 	if (result != VK_SUCCESS)             \
 	{                                     \
@@ -27,7 +29,11 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_callback(
 	VkDebugUtilsMessageSeverityFlagBitsEXT msg_severity,
 	VkDebugUtilsMessageTypeFlagsEXT msg_flags,
 	const VkDebugUtilsMessengerCallbackDataEXT *p_callback_data,
-	void *user_data);
+	void *user_data)
+{
+	std::cout << "validation error: " << p_callback_data->pMessage << std::endl;
+	return VK_FALSE;
+};
 
 class Renderer
 {
@@ -90,6 +96,7 @@ struct VkContext
 	VkQueue graphics_queue;
 	VkPipeline pipeline;
 	VkPipelineLayout pipeline_layout;
+	Image image;
 
 	VkCommandPool command_pool;
 
