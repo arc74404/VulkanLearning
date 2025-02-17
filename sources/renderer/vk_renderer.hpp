@@ -9,12 +9,6 @@
 #include <vulkan/vulkan.h>
 #include <vector>
 
-#include "window.hpp"
-#include "device.hpp"
-
-#include "swap_chain.hpp"
-#include "pipeline.hpp"
-
 #include "vk_types.hpp"
 
 #define VK_CHECK(result)                  \
@@ -35,56 +29,6 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_callback(
 	return VK_FALSE;
 };
 
-class Renderer
-{
-public:
-	Renderer(Window *window);
-
-	bool render();
-
-private:
-	bool createInstance();
-
-	bool createDebugMessenger();
-
-	bool createSurface(GLFWwindow *window);
-
-	bool createDevice();
-
-	bool createSwapChain(uint32_t height, uint32_t width);
-
-	bool createRenderPass(VkSurfaceFormatKHR surface_format, VkDevice logical_device);
-
-	bool createFrameBuffer();
-
-	bool createPipeline();
-
-	bool createCommandPool(VkDevice logical_device, uint32_t graphic_index);
-
-	bool createSemaphores(VkDevice logical_device);
-
-	VkInstance m_instance;
-
-	VkDebugUtilsMessengerEXT m_debug_messenger;
-
-	VkSurfaceKHR m_surface;
-
-	SwapChain m_swapchin;
-
-	Device m_device;
-
-	VkRenderPass m_renderpass;
-
-	Pipeline m_pipeline;
-
-	VkCommandPool m_command_pool;
-
-	VkSemaphore m_submit_semaphore;
-	VkSemaphore m_acuire_semaphore;
-
-	VkRect2D m_screen_rect;
-};
-
 struct VkContext
 {
 	VkInstance instance;
@@ -97,11 +41,14 @@ struct VkContext
 	VkPipeline pipeline;
 	VkPipelineLayout pipeline_layout;
 	Image image;
+	Buffer staging_buffer;
 
 	VkCommandPool command_pool;
 
 	VkSemaphore submit_semaphore;
 	VkSemaphore acuire_semaphore;
+
+	VkCommandBuffer cmd;
 
 	uint32_t swapchain_image_count;
 
@@ -116,6 +63,14 @@ struct VkContext
 	int graphics_index;
 
 	VkPhysicalDevice gpu;
+
+	VkSampler sampler;
+
+	VkDescriptorSet desc_set;
+	VkDescriptorPool desc_pool;
+	VkDescriptorSetLayout set_layout;
+
+	VkFence imgAvailableFence;
 };
 
 bool vk_init(VkContext *vk_context, GLFWwindow *window);

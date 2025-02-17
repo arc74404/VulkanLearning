@@ -19,10 +19,7 @@ set(SOURCES
     sources/main/main.cpp 
     sources/renderer/vk_renderer.cpp
     sources/renderer/vk_init.cpp
-    sources/renderer/window.cpp
-    sources/renderer/device.cpp
-    sources/renderer/swap_chain.cpp
-    sources/renderer/pipeline.cpp
+    sources/renderer/vk_util.cpp
 )
 
 

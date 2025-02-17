@@ -18,4 +18,9 @@ bool vk_render(VkContext *vk_context);
 
 char *read_file(const std::string &filename, uint32_t &size);
 
+VkCommandBufferAllocateInfo cmd_alloc_info(VkCommandPool pool);
+
+VkSubmitInfo submit_info(VkCommandBuffer *cmd, uint32_t cmdCount = 1);
+
+VkFenceCreateInfo fence_info(VkFenceCreateFlags flags = 0);
 #endif // VK_INIT_HPP

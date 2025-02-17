@@ -6,12 +6,6 @@
 #include <thread>
 #include <chrono>
 
-#include "sources/renderer/window.hpp"
-
-#define CONTEXT_VERSION
-
-#ifdef CONTEXT_VERSION
-
 GLFWwindow *create_window()
 {
 	GLFWwindow *window = NULL;
@@ -39,12 +33,8 @@ int run_window(VkContext *vk_context, GLFWwindow *window)
 	return 0;
 }
 
-#endif // CONTEXT_VERSION
-
 int main()
 {
-#ifdef CONTEXT_VERSION
-
 	if (!glfwInit())
 	{
 		std::cerr << "GLFW initialization failed!" << std::endl;
@@ -64,12 +54,6 @@ int main()
 	};
 
 	run_window(&vk_context, glf_window);
-#elif  // CONTEXT_VERSION
-
-	Window glfw_window(640u, 480u, "Triangle");
-	Renderer renderer(&glfw_window);
-	glfw_window.run(&renderer);
-#endif // CONTEXT_VERSION
 
 	vkDestroySurfaceKHR(vk_context.instance, vk_context.surface, 0);
 	return 0;
