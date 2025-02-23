@@ -7,4 +7,8 @@
 #define MB(x) ((uint64_t)1024 * KB(x))
 #define GB(x) ((uint64_t)1024 * MB(x))
 
+#define ArraySize(arr) sizeof((arr)) / sizeof((arr[0]))
+
+#define INVALID_IDX UINT32_MAX
+
 #endif // DEFINES_H

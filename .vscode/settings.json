@@ -73,9 +73,6 @@
 		"xhash": "cpp",
 		"numbers": "cpp",
 		"iomanip": "cpp",
-		"fstream": "cpp",
-		"chrono": "cpp",
-		"forward_list": "cpp"
-	},
-	"files.autoSave": "onWindowChange"
+		"fstream": "cpp"
+	}
 }

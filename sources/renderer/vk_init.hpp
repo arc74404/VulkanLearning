@@ -23,4 +23,5 @@ VkCommandBufferAllocateInfo cmd_alloc_info(VkCommandPool pool);
 VkSubmitInfo submit_info(VkCommandBuffer *cmd, uint32_t cmdCount = 1);
 
 VkFenceCreateInfo fence_info(VkFenceCreateFlags flags = 0);
+
 #endif // VK_INIT_HPP
